@@ -8,19 +8,26 @@
 
 import UIKit
 
+/// ViewController associated with CTCocktailTypeView
 class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var categoryView: CTCocktailCategoriesView!
-
-    private var userIsRefreshing = false
-    private let threshold: CGFloat = 50.0
     private var categoryModel: CTCocktailCategoriesModel
+    private var refresher: TableRefresher
 
+    /// Initializes the controller with a filter.
+    /// - Parameters:
+    ///     - filter: the selected cocktail type.
     init() {
+        self.refresher = TableRefresher()
         self.categoryModel = CTCocktailCategoriesModel()
         super.init(nibName: "CTCocktailCategoriesViewController", bundle: nil)
     }
     
+    /// Initializer from NSCoder
+    /// Required from parent
+    /// - Parameters:
+    ///     - aDecoder: The decoder to be used.
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,27 +48,17 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
     }
     
     //MARK: -Private Funcs
-    
     private func setupController() {
         self.setupTable()
     }
     
+    /// Sets up the connection with the table view
     private func setupTable() {
         self.categoryView.categoriesTableView.delegate = self
         self.categoryView.categoriesTableView.dataSource = self
     }
     
-    private func refreshTable() {
-        userIsRefreshing = true
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.getCocktailCategories()
-            DispatchQueue.main.async {
-                self.categoryView.categoriesTableView.reloadData()
-                self.userIsRefreshing = false
-            }
-        }
-    }
-    
+    /// Checks the UserDefaults store for existing cocktail categories.
     private func checkForCachedCategories() {
         if Archiver.Exists(key: "categories") {
             let categories = Archiver.retrieveElement(forKey: "categories")
@@ -72,6 +69,7 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
         }
     }
     
+    /// Retrieves all filtered drinks from the web service.
     private func getCocktailCategories() {
         CTAPI.getCocktailCategories { [weak self] (success, failure) in
             if let this = self {
@@ -109,15 +107,15 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
     }
     
     //MARK: -UIScrollViewDelegate
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let table = categoryView.categoriesTableView
-        let contentOffset = table!.contentOffset.y
-        let maximumOffset = table!.contentSize.height
-            - table!.frame.size.height
-
-        if !userIsRefreshing && (maximumOffset + contentOffset <= threshold) {
-            refreshTable()
-        }
+        refresher.validatePullRefresh(withDirection: .up,
+            for: categoryView.categoriesTableView,
+            with: getCocktailCategories)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // let asd = scrollView.contentOffset
+        print(scrollView.contentOffset)
+        refresher.set(lastDirection: scrollView.contentOffset.y)
     }
 }

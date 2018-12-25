@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Class for the Cocktail type XIB
 class CustomTableViewCell: UITableViewCell {
     
     @IBOutlet weak var drinkThumb: UIImageView!

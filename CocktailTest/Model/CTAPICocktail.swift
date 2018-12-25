@@ -11,6 +11,9 @@ import Unbox
 
 extension CTAPI {
 
+    /// Retrieves drinks from the API.
+    /// - Parameters:
+    ///     - completion: Callback method
     static func getCocktailCategories(_ completion: @escaping (_ response: CTCategoriesList?, _ error: NSError?) -> Void) {
         Alamofire.request(apiHsot() + "list.php", method: .get, parameters: ["c":"list"], encoding: URLEncoding.default, headers: nil).validate().responseJSON { (response) in
             switch response.result {
@@ -31,6 +34,11 @@ extension CTAPI {
         }
     }
     
+    /// Retrieves drinks from the API.
+    /// - Parameters:
+    ///     - filter: Filter used to change search type
+    ///     - args: Values to filter.
+    ///     - completion: Callback method
     static func getDrinks(filter: String, args: Dictionary<String, String>, _ completion: @escaping (_ response: CTTypesList?, _ error: NSError?) -> Void) {
         Alamofire.request(apiHsot() + filter, method: .get, parameters: args, encoding: URLEncoding.default, headers: nil).validate().responseJSON { (response) in
             switch response.result {

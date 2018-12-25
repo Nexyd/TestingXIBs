@@ -8,17 +8,25 @@
 
 import UIKit
 
+/// Class for the Cocktail type XIB
 class CTCocktailTypeView: UIXibView {
 
     @IBOutlet var typeView: UIView!
     @IBOutlet weak var typesTableView: UITableView!
     
+    /// Base initializer
+    /// - Parameters:
+    ///     - frame: A CGRect to setup the frame.
     override init(frame: CGRect) {
         super.init(frame: frame)
         super.view = typeView
         super.tableView = typesTableView
     }
     
+    /// Initializer from NSCoder
+    /// Required from parent
+    /// - Parameters:
+    ///     - aDecoder: The decoder to be used.
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

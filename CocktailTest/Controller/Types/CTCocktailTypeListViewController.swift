@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// ViewController associated with CTCocktailTypeView
 class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var typeView: CTCocktailTypeView!
@@ -15,12 +16,19 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
     private let typesModel: CTCocktailTypeModel
     private var filter: String
     
+    /// Initializes the controller with a filter.
+    /// - Parameters:
+    ///     - filter: the selected cocktail type.
     init(filter: String) {
         self.filter = filter
         self.typesModel = CTCocktailTypeModel()
         super.init(nibName: "CTCocktailTypesViewController", bundle: nil)
     }
     
+    /// Initializer from NSCoder
+    /// Required from parent
+    /// - Parameters:
+    ///     - aDecoder: The decoder to be used.
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -35,6 +43,9 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
         let customCell = UINib(nibName: "CustomTableViewCell", bundle: bundle)
         self.typeView.typesTableView.register(customCell,
             forCellReuseIdentifier: "CustomTableViewCell")
+        
+        // typeView.typesTableView.rowHeight = UITableViewAutomaticDimension
+        // typeView.typesTableView.estimatedRowHeight = 600
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,6 +58,7 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
+    /// Retrieves all filtered drinks from the web service.
     private func getDrinks() {
         CTAPI.getDrinks(filter: "filter.php", args: ["c":self.filter]) {
             [weak self] (success, failure) in
@@ -71,9 +83,6 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = UITableViewCell(style: .default, reuseIdentifier: "cellId")
-//        cell.textLabel?.text = self.typesModel.getTypeForIndex(indexPath.row)?.getDrink()
-
         let cell = self.typeView.typesTableView.dequeueReusableCell(
             withIdentifier: "CustomTableViewCell") as! CustomTableViewCell
 
