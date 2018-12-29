@@ -27,6 +27,7 @@
 		33052F3E21C5160200AEA747 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33052F3D21C5160200AEA747 /* CustomTableViewCell.swift */; };
 		3305B55621C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305B55521C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift */; };
 		3341E5E621C9546200282173 /* TableRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3341E5E521C9546200282173 /* TableRefresher.swift */; };
+		335D10AD21D40B2F00B87A7C /* spinner.gif in Resources */ = {isa = PBXBuildFile; fileRef = 335D10AC21D40B2F00B87A7C /* spinner.gif */; };
 		3363BE6121C52A3400E6D1D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3363BE6021C52A3400E6D1D7 /* LaunchScreen.xib */; };
 		33E61BBB21C496E300D20298 /* Archiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E61BBA21C496E300D20298 /* Archiver.swift */; };
 		33E61BC121C49A6900D20298 /* CTCocktailType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E61BBF21C49A6900D20298 /* CTCocktailType.swift */; };
@@ -82,6 +83,7 @@
 		33052F3D21C5160200AEA747 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		3305B55521C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCocktailTypeListViewController.swift; sourceTree = "<group>"; };
 		3341E5E521C9546200282173 /* TableRefresher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRefresher.swift; sourceTree = "<group>"; };
+		335D10AC21D40B2F00B87A7C /* spinner.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinner.gif; sourceTree = "<group>"; };
 		3363BE6021C52A3400E6D1D7 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		33E61BBA21C496E300D20298 /* Archiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archiver.swift; sourceTree = "<group>"; };
 		33E61BBF21C49A6900D20298 /* CTCocktailType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCocktailType.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 		19DDA6C221A3601200E37750 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				335D10AC21D40B2F00B87A7C /* spinner.gif */,
 				1995CD2B21A33928006774F0 /* Assets.xcassets */,
 				1995CD3021A33928006774F0 /* Info.plist */,
 			);
@@ -409,6 +412,7 @@
 				3363BE6121C52A3400E6D1D7 /* LaunchScreen.xib in Resources */,
 				1995CD5521A33AEB006774F0 /* CTCocktailCategoriesViewController.xib in Resources */,
 				33052F3621C4F19E00AEA747 /* CTCocktailTypesViewController.xib in Resources */,
+				335D10AD21D40B2F00B87A7C /* spinner.gif in Resources */,
 				1995CD5E21A33E3D006774F0 /* CTCocktailCategoriesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -439,12 +443,14 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-CocktailTest/Pods-CocktailTest-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftGifOrigin/SwiftGifOrigin.framework",
 				"${BUILT_PRODUCTS_DIR}/Unbox/Unbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGifOrigin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Unbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

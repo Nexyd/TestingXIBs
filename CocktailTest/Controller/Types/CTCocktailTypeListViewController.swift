@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftGifOrigin
 
 /// ViewController associated with CTCocktailTypeView
 class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -38,22 +39,22 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
 
         self.typeView.typesTableView.dataSource = self
         self.typeView.typesTableView.delegate   = self
+        self.typeView.spinner.image = UIImage.gif(name: "spinner")
 
         let bundle = Bundle(for: type(of: self))
         let customCell = UINib(nibName: "CustomTableViewCell", bundle: bundle)
         self.typeView.typesTableView.register(customCell,
             forCellReuseIdentifier: "CustomTableViewCell")
-        
-        // typeView.typesTableView.rowHeight = UITableViewAutomaticDimension
-        // typeView.typesTableView.estimatedRowHeight = 600
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.typeView.spinner.isHidden = false
         DispatchQueue.global(qos: .userInitiated).async {
             self.getDrinks()
             DispatchQueue.main.async {
                 self.typeView.typesTableView.reloadData()
+                self.typeView.spinner.isHidden = true
             }
         }
     }
@@ -90,10 +91,12 @@ class CTCocktailTypeListViewController: UIViewController, UITableViewDelegate, U
         let imageUrl = self.typesModel.getTypeForIndex(indexPath.row)?.getDrinkThumb()
         let url = URL(string: imageUrl!)
 
+        self.typeView.spinner.isHidden = false
         DispatchQueue.global(qos: .userInitiated).async {
             let data = try? Data(contentsOf: url!)
             DispatchQueue.main.async {
                 cell.drinkThumb.image = UIImage(data: data!)
+                self.typeView.spinner.isHidden = true
             }
         }
         

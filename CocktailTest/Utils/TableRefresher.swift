@@ -12,21 +12,22 @@ import UIKit
 /// This class serves as a quick implementation of a pull to refresh action.
 class TableRefresher {
 
-    private var userIsRefreshing: Bool
-    private var lastContentOffset: CGFloat
+    private var spinner: UIImageView?
+    private var userDirection: Direction
     private var contentOffset: CGFloat
+    private var minimumOffset: CGFloat
     private var maximumOffset: CGFloat
 
     /// Base initializer
     init() {
-        self.userIsRefreshing = false
-        self.lastContentOffset = 0.0
+        self.userDirection = .up
         self.contentOffset = 0.0
+        self.minimumOffset = 0.0
         self.maximumOffset = 0.0
     }
 
     /// Enumeration of the possible directions to pull.
-    enum Directions {
+    enum Direction {
         case up
         case down
     }
@@ -36,17 +37,14 @@ class TableRefresher {
     ///     - direction: Direction in which the user pulled.
     ///     - table: Table which is going to be refreshed.
     ///     - method: Method to be called upon refresh.
-    func validatePullRefresh(withDirection direction: Directions,
+    func validatePullRefresh(withDirection directionAllowed: Direction,
         for table: UITableView, with method: @escaping () -> Void)
     {
-        contentOffset = table.contentOffset.y
-        maximumOffset = table.contentSize.height
-            - table.frame.size.height
+        maximumOffset = table.contentSize.height - table.frame.size.height
 
-        // If the user has ended refreshing and the table is within boundaries
-        // then we can refresh the table with the method passed.
-        // This is done to prevent multiple callings upon pull.
-        if !userIsRefreshing && isWithinThreshold(of: direction) {
+        // If the direction in which the user pulled, is the same that the direction
+        // we want the pull to be done, we can proceed.
+        if userDirection == directionAllowed && checkOffset() {
             refresh(table: table, with: method)
         }
     }
@@ -59,37 +57,42 @@ class TableRefresher {
     private func refresh(table: UITableView,
         with method: @escaping () -> Void)
     {
-        userIsRefreshing = true
+        self.spinner?.isHidden = false
         DispatchQueue.global(qos: .userInitiated).async {
             method()
             DispatchQueue.main.async {
                 table.reloadData()
-                self.userIsRefreshing = false
+                self.spinner?.isHidden = true
             }
         }
     }
     
-    /// Checks the boundaries to know if the pull has been done.
-    /// - Parameters:
-    ///     - direction: direction in which the pull would be done.
-    /// - Returns: Whether the pull has been done.
-    private func isWithinThreshold(of direction: Directions) -> Bool {
-        let threshold: CGFloat = (direction == .up) ? 50.0 : 10.0
-        let thresholdCheck = (direction == .up) ?
-            maximumOffset + contentOffset :
-            maximumOffset - contentOffset
-        
-        let withinThreshold = (direction == .up) ?
-            (thresholdCheck <= threshold) :
-            (thresholdCheck >= threshold)
-
-        return withinThreshold
+    private func checkOffset() -> Bool {
+        // If we've pulled up and have reached the top of the table or
+        // pulled down and reached the bottom, we can proceed.
+        return (userDirection == .up   && contentOffset < minimumOffset)
+            || (userDirection == .down && contentOffset > maximumOffset)
     }
     
-    /// Sets the last direction pulled.
+    /// Sets the direction in which the user pulled.
     /// - Parameters:
-    ///     - lastDirection: last direction pulled
-    func set(lastDirection: CGFloat) {
-        self.lastContentOffset = lastDirection
+    ///     - direction: direction pulled
+    func set(direction: Direction) {
+        self.userDirection = direction
+    }
+
+    /// Sets the content offset reached upon pull's end.
+    /// - Parameters:
+    ///     - spinner: Content offset reached.
+    func set(offset: CGFloat) {
+        self.contentOffset = offset
+    }
+
+
+    /// Sets the spinner used in the refresh.
+    /// - Parameters:
+    ///     - spinner: Spinner to be used
+    func set(spinner: UIImageView) {
+        self.spinner = spinner
     }
 }

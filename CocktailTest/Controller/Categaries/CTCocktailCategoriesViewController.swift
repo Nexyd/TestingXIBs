@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftGifOrigin
 
 /// ViewController associated with CTCocktailTypeView
 class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -19,8 +20,8 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
     /// - Parameters:
     ///     - filter: the selected cocktail type.
     init() {
-        self.refresher = TableRefresher()
         self.categoryModel = CTCocktailCategoriesModel()
+        self.refresher = TableRefresher()
         super.init(nibName: "CTCocktailCategoriesViewController", bundle: nil)
     }
     
@@ -35,6 +36,9 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupController()
+
+        self.categoryView.spinner.image = UIImage.gif(name: "spinner")
+        self.refresher.set(spinner: self.categoryView.spinner)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,7 +78,10 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
         CTAPI.getCocktailCategories { [weak self] (success, failure) in
             if let this = self {
                 if let catList = success {
-                    let sortedCats = catList.getCategoriesList()!.sorted { $0.getCategory() < $1.getCategory() }
+                    let sortedCats = catList.getCategoriesList()!.sorted {
+                        $0.getCategory() < $1.getCategory()
+                    }
+
                     this.categoryModel.setCategoriesList(catList: sortedCats)
                     this.categoryView.categoriesTableView.reloadData()
                     Archiver.store(element: sortedCats, as: "categories")
@@ -112,10 +119,17 @@ class CTCocktailCategoriesViewController: UIViewController, UITableViewDelegate,
             for: categoryView.categoriesTableView,
             with: getCocktailCategories)
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // let asd = scrollView.contentOffset
-        print(scrollView.contentOffset)
-        refresher.set(lastDirection: scrollView.contentOffset.y)
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity
+        velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        let table = categoryView.categoriesTableView!
+        refresher.set(offset: table.contentOffset.y)
+
+        if targetContentOffset.pointee.y > scrollView.contentOffset.y {
+            refresher.set(direction: .up)
+        } else {
+            refresher.set(direction: .down)
+        }
     }
 }

@@ -13,6 +13,7 @@ class CTCocktailTypeView: UIXibView {
 
     @IBOutlet var typeView: UIView!
     @IBOutlet weak var typesTableView: UITableView!
+    @IBOutlet weak var spinner: UIImageView!
     
     /// Base initializer
     /// - Parameters:

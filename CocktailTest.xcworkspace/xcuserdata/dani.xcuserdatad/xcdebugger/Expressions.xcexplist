@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "TableRefresher.isWithinThreshold(of:):TableRefresher.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "contentOffset">
+            </PersistentString>
+            <PersistentString
+               value = "maximumOffset">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in TableRefresher.refresh(table:with:):TableRefresher.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.spinner.isHidden">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "TableRefresher.refresh(table:with:):TableRefresher.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.spinner.isHidden">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
