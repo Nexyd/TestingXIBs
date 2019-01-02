@@ -26,7 +26,6 @@
 		33052F3C21C515B900AEA747 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33052F3B21C515B900AEA747 /* CustomTableViewCell.xib */; };
 		33052F3E21C5160200AEA747 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33052F3D21C5160200AEA747 /* CustomTableViewCell.swift */; };
 		3305B55621C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3305B55521C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift */; };
-		3341E5E621C9546200282173 /* TableRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3341E5E521C9546200282173 /* TableRefresher.swift */; };
 		335D10AD21D40B2F00B87A7C /* spinner.gif in Resources */ = {isa = PBXBuildFile; fileRef = 335D10AC21D40B2F00B87A7C /* spinner.gif */; };
 		3363BE6121C52A3400E6D1D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3363BE6021C52A3400E6D1D7 /* LaunchScreen.xib */; };
 		33E61BBB21C496E300D20298 /* Archiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E61BBA21C496E300D20298 /* Archiver.swift */; };
@@ -82,7 +81,6 @@
 		33052F3B21C515B900AEA747 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		33052F3D21C5160200AEA747 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		3305B55521C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCocktailTypeListViewController.swift; sourceTree = "<group>"; };
-		3341E5E521C9546200282173 /* TableRefresher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableRefresher.swift; sourceTree = "<group>"; };
 		335D10AC21D40B2F00B87A7C /* spinner.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinner.gif; sourceTree = "<group>"; };
 		3363BE6021C52A3400E6D1D7 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		33E61BBA21C496E300D20298 /* Archiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archiver.swift; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 		19DDA6B821A34A7F00E37750 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3341E5E521C9546200282173 /* TableRefresher.swift */,
 				19DDA6B621A34A0B00E37750 /* CTConstants.swift */,
 			);
 			path = Utils;
@@ -486,7 +483,6 @@
 				33E61BC221C49A6900D20298 /* CTTypeList.swift in Sources */,
 				1995CD2521A33927006774F0 /* AppDelegate.swift in Sources */,
 				33E61BC421C49A8C00D20298 /* UIXibView.swift in Sources */,
-				3341E5E621C9546200282173 /* TableRefresher.swift in Sources */,
 				33E61BC121C49A6900D20298 /* CTCocktailType.swift in Sources */,
 				3305B55621C4A79D00EA1B8F /* CTCocktailTypeListViewController.swift in Sources */,
 				19DDA6BE21A34EFB00E37750 /* CTCocktailCategoriesModel.swift in Sources */,

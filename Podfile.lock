@@ -2,24 +2,28 @@ PODS:
   - Alamofire (4.5.1)
   - AlamofireImage (3.3.0):
     - Alamofire (~> 4.5)
+  - SwiftGifOrigin (1.6.1)
   - Unbox (2.5.0)
 
 DEPENDENCIES:
   - Alamofire (= 4.5.1)
   - AlamofireImage (= 3.3.0)
+  - SwiftGifOrigin
   - Unbox (= 2.5.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - SwiftGifOrigin
     - Unbox
 
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
   Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: 648a239c9d7d7a826dee0f190c02fee5287c3578
+PODFILE CHECKSUM: b72e0bce3cba3c2b8ef31ad5af72329bd3699c3e
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
