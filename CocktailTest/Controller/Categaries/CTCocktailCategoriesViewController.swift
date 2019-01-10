@@ -38,7 +38,8 @@ class CTCocktailCategoriesViewController: UIViewController,
         super.viewDidLoad()
         self.setupTable()
 
-        self.categoryView.spinner.image = UIImage.gif(name: "spinner")
+        self.categoryView.spinner.image =
+            UIImage.gif(name: "spinner")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,8 +82,8 @@ class CTCocktailCategoriesViewController: UIViewController,
     
     /// Checks the UserDefaults store for existing cocktail categories.
     private func checkForCachedCategories() {
-        if Archiver.Exists(key: "categories") {
-            let categories = Archiver.retrieveElement(forKey: "categories")
+        if Archiver.hasData(for: "Category") {
+            let categories = Archiver.retrieveEntity(withName: "Category")
             categoryModel.setCategoriesList(catList: categories as? [CTCocktailCategory])
             categoryView.categoriesTableView.reloadData()
         } else {
@@ -102,7 +103,7 @@ class CTCocktailCategoriesViewController: UIViewController,
 
                         this.categoryModel.setCategoriesList(catList: sortedCats)
                         this.categoryView.categoriesTableView.reloadData()
-                        Archiver.store(element: sortedCats, as: "categories")
+                        Archiver.store(elements: sortedCats, forEntity: "Category", field: "name")
                     }
 
                     if let error = failure {

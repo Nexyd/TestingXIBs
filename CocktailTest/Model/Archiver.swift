@@ -6,43 +6,77 @@
 //  Copyright © 2018 Daniel Moraleda. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import CoreData
 
-/// This class saves NSCoding objects in UserDefaults
+/// This class saves NSCoding objects in CoreData
 class Archiver {
 
-    /// Stores data in the UserDefaults with a specific key.
+    /// Stores data in the CoreData with a specific key.
     /// - Parameters:
     ///     - element: the element we're going to store.
-    ///     - key:  the key associated to the element.
-    static func store(element: [NSCoding], as key: String) {
-        let data = NSKeyedArchiver.archivedData(withRootObject: element)
-        UserDefaults.standard.set(data, forKey: key)
-    }
+    ///     - entity:  the entity in which we're going to store the element.
+    ///     - field:   the field of the entity selected.
+    static func store(elements: [NSCoding], forEntity entity: String, field: String) {
+        var categoriesEntity: [NSManagedObject] = []
+        guard let appDelegate = UIApplication.shared.delegate
+            as? AppDelegate else { return }
 
-    /// Checks the UserDefaults store for a specific key.
-    /// - Parameters:
-    ///     - key: The key we're looking for.
-    /// - Returns: True if found, False if not.
-    static func Exists(key: String) -> Bool {
-        return UserDefaults.standard.object(forKey: key) != nil
-    }
-
-    /// Retrieves an element from the UserDefaults store.
-    /// - Parameters:
-    ///     - key: The key we want to get.
-    /// - Returns: Assigned value of key if found.
-    static func retrieveElement(forKey key: String) -> [NSCoding] {
-        var element: [NSCoding] = []
+        // let managedContext = NSManagedObjectContext(
+        //    concurrencyType: .mainQueueConcurrencyType)
         
-        if (Exists(key: key)) {
-            let data = UserDefaults.standard.value(forKey: key)
-            element = NSKeyedUnarchiver.unarchiveObject(
-                with: data as! Data) as! [NSCoding]
-        } else {
-            print("The key \(key) was not found")
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(
+            forEntityName: entity, in: managedContext)
+
+        for element in elements {
+            let category = NSManagedObject(entity:
+                entity!, insertInto: managedContext)
+
+            category.setValue(element, forKeyPath: field)
+
+            do {
+                try managedContext.save()
+                categoriesEntity.append(category)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
+    }
+
+    /// Checks the CoreData model for a specific entity.
+    /// - Parameters:
+    ///     - key: The entity we're looking for.
+    /// - Returns: True if has data, False if not.
+    static func hasData(for entity: String) -> Bool {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        
+        let output = try? context.fetch(request)
+        let result = (output?.count == 0) ? true : false
+        
+        return result
+    }
+
+    /// Retrieves an element from the CoreData store.
+    /// - Parameters:
+    ///     - name: The name of the entity we want to get.
+    /// - Returns: Entity's content.
+    static func retrieveEntity(withName name: String) -> [NSCoding]? {
+        guard let appDelegate = UIApplication.shared.delegate
+            as? AppDelegate else { return nil }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: name)
+        var categories: [NSCoding] = []
+
+        do {
+            categories = try (managedContext.fetch(fetchRequest) as! [NSCoding])
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
         
-        return element
+        return categories
     }
 }
